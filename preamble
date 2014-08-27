@@ -5,8 +5,8 @@
 #+HTML_DOCTYPE: html5
 #+HTML_CONTAINER: div
 #+LINK_UP: index.html
-#+HTML_HEAD: <link href="http://fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
-#+HTML_HEAD: <link href="http://fonts.googleapis.com/css?family=Cardo" rel="stylesheet" type="text/css">
+#+HTML_HEAD: <link href="//fonts.googleapis.com/css?family=Droid+Sans" rel="stylesheet" type="text/css">
+#+HTML_HEAD: <link href="//fonts.googleapis.com/css?family=Cardo" rel="stylesheet" type="text/css">
 #+HTML_HEAD: <link href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css" rel="stylesheet" type="text/css">
 #+HTML_HEAD: <link href="/static/css/main.css" rel="stylesheet" type="text/css">
 #+HTML_HEAD: <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
