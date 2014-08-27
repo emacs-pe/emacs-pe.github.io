@@ -1,0 +1,19 @@
+#+SETUPFILE: preamble
+#+TITLE: Emacs Perú
+#+DESCRIPTION: Comunidad de usuarios de Emacs en Perú
+
+#+BEGIN_QUOTE
+Emacs outshines all other editing software in approximately the same way that the noonday sun does the stars. It is not just bigger and brighter; it simply makes everything else vanish.
+@@html:<cite>@@– Neal Stephenson, In the Beginning was the Command Line@@html:</cite>@@
+#+END_QUOTE
+
+# [[./img/Emacs-logo.svg]]
+
+* Acerca de nosotros
+Somos un grupo de usuarios de [[https://www.gnu.org/software/emacs/][Emacs]] en Perú. Puedes navegar por [[file:faq.org][preguntas frequentes]].
+
+* Proyectos
+#+HTML: <div id="projects"></div>
+
+* Contacto
+Puedes apoyar editando la [[https://github.com/emacs-pe/emacs-pe.github.io/wiki][wiki]]

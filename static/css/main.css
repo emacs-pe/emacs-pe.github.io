@@ -1,0 +1,87 @@
+a {
+  text-decoration: none;
+  color: rgb(61, 146, 201);
+}
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+body {
+  font-family: FreeSans, Arimo, "Droid Sans", Helvetica, Arial, sans-serif;
+  overflow: visible;
+  padding: 40px 170px 40px 170px;
+  position: relative;
+}
+
+blockquote {
+  padding-left: 10px;
+  margin-left: 30%;
+  font-family: "Cardo", serif;
+  font-style: italic;
+  border-left: 5px solid #EEE;
+}
+blockquote cite {
+  font-style: normal;
+  display: block;
+}
+
+.title {
+  text-align: center;
+  top: auto;
+}
+
+hr {
+  width: 80%;
+  border: 1px solid #EEE;
+}
+
+.repo__name {
+  margin: 0 0 0.1em;
+  font-size: 1.5em;
+}
+
+.repo__info {
+  display: block;
+  margin: 0 0 1.25em;
+  font-size: 12px;
+  font-weight: bold;
+  color: #999;
+}
+
+.repo__desc {
+  color: #666;
+}
+
+.repo__team {
+  overflow: hidden;
+  margin: 20px -1px 0;
+}
+
+.repo__team img {
+  float: left;
+  width: 23px;
+  height: 23px;
+  border: 1px solid #999;
+  margin: 0 1px;
+  background: #eee;
+}
+
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {
+  body {
+    padding: 20px 80px 20px 80px;
+  }
+}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {}
