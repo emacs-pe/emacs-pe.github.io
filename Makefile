@@ -1,21 +1,23 @@
 CASK  ?= cask
 EMACS ?= emacs
-BATCH  = $(EMACS) $(EFLAGS) -batch -Q
+BATCH  = $(EMACS) --batch -Q
 
-.PHONY: all
-all: elpa
+export EMACS
+
+PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
+
+.PHONY: all build
+
+all: build
+
+build: publish.el index.org $(PKGDIR)
 	$(CASK) exec $(BATCH) -l publish.el -f org-publish-all
 
-elpa: Cask
+$(PKGDIR): Cask
 	$(CASK) install
-	touch $@
+	touch $(PKGDIR)
 
 .PHONY: clean
 clean:
-	rm -f *~
-	rm -f *.elc
-	rm -f *.html
-
-.PHONY: clean-all
-clean-all: clean
-	rm -fr elpa .cask
+	$(RM) *~
+	$(RM) *.elc

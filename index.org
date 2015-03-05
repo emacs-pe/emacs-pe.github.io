@@ -1,19 +1,27 @@
-#+SETUPFILE: preamble
 #+TITLE: Emacs Perú
+
 #+DESCRIPTION: Comunidad de usuarios de Emacs en Perú
+#+OPTIONS: html-link-use-abs-url:nil html-postamble:nil html-preamble:t
+#+OPTIONS: html-scripts:nil html-style:nil html5-fancy:t tex:t toc:nil num:nil
+#+HTML_DOCTYPE: html5
+#+HTML_CONTAINER: div
+#+HTML_HEAD: <link href="//fonts.googleapis.com/css?family=Gentium+Book+Basic|Open+Sans" rel="stylesheet" type="text/css">
+#+HTML_HEAD: <link href="/static/css/normalize.css" rel="stylesheet" type="text/css">
+#+HTML_HEAD: <link href="/static/css/main.css" rel="stylesheet" type="text/css">
+#+HTML_HEAD: <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+#+HTML_HEAD: <script src="/static/js/main.js"></script>
+#+HTML_MATHJAX: align:"left" path:"//cdnjs.cloudflare.com/ajax/libs/mathjax/2.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
 
 #+BEGIN_QUOTE
 Emacs outshines all other editing software in approximately the same way that the noonday sun does the stars. It is not just bigger and brighter; it simply makes everything else vanish.
 @@html:<cite>@@– Neal Stephenson, In the Beginning was the Command Line@@html:</cite>@@
 #+END_QUOTE
 
-# [[./img/Emacs-logo.svg]]
+# #+ATTR_HTML: alt="Emacs logo."
+# [[file:static/img/Emacs.png]]
 
 * Acerca de nosotros
-Somos un grupo de usuarios de [[https://www.gnu.org/software/emacs/][Emacs]] en Perú. Puedes navegar por [[file:faq.org][preguntas frequentes]].
+Somos un grupo de usuarios de [[https://www.gnu.org/software/emacs/][Emacs]] en [[https://en.wikipedia.org/wiki/Peru][Perú]].
 
 * Proyectos
 #+HTML: <div id="projects"></div>
-
-* Contacto
-Puedes apoyar editando la [[https://github.com/emacs-pe/emacs-pe.github.io/wiki][wiki]]
