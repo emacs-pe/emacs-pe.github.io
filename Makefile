@@ -1,3 +1,4 @@
+WGET  ?= wget
 CASK  ?= cask
 EMACS ?= emacs
 BATCH  = $(EMACS) --batch -Q
@@ -21,3 +22,12 @@ $(PKGDIR): Cask
 clean:
 	$(RM) *~
 	$(RM) *.elc
+
+.PHONY: elpa
+elpa: package-build.el
+	$(BATCH) -l $< -f package-build-all
+
+package-build.el:
+	$(WGET) -q -O $@ "https://github.com/milkypostman/melpa/raw/master/package-build.el"
+
+.INTERMEDIATE: package-build.el

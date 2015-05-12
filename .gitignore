@@ -1,4 +1,5 @@
 *~
 .dir-locals.el
 .cask
-elpa
+/working/
+/package-build.el

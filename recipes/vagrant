@@ -1,0 +1,1 @@
+(vagrant :fetcher github :repo "emacs-pe/vagrant.el")
