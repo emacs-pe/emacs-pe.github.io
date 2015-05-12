@@ -3,3 +3,4 @@
 .cask
 /working/
 /package-build.el
+!/packages/*.tar

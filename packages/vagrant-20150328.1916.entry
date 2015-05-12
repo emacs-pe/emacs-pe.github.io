@@ -1,0 +1,2 @@
+
+(vagrant . [(20150328 1916) ((emacs (24)) (cl-lib (0 5))) "Interact with vagrant machines" single ((:keywords "vagrant" "convenience") (:url . "https://github.com/emacs-pe/vagrant.el"))])
