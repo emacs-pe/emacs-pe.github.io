@@ -11,7 +11,7 @@ PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
 
 all: build
 
-build: publish.el index.org $(PKGDIR)
+build: publish.el $(PKGDIR)
 	$(CASK) exec $(BATCH) -l publish.el -f org-publish-all
 
 $(PKGDIR): Cask
