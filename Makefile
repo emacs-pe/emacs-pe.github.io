@@ -1,6 +1,6 @@
 WGET  ?= wget
 CASK  ?= cask
-EMACS ?= emacs
+EMACS  = emacs
 BATCH  = $(EMACS) --batch -Q
 
 export EMACS
@@ -22,6 +22,11 @@ $(PKGDIR): Cask
 clean:
 	$(RM) *~
 	$(RM) *.elc
+
+.PHONY: build-package
+build-package: package-build.el
+	$(BATCH) -l $< -f package-build-archive
+	$(BATCH) -l $< -f package-build-cleanup
 
 .PHONY: elpa
 elpa: package-build.el
