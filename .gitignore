@@ -1,6 +1,10 @@
 *~
 .dir-locals.el
 .cask
-/working/
+/.bundle/
+/Gemfile.lock
+/_site/
 /package-build.el
+/vendor/
+/working/
 !/packages/*.tar

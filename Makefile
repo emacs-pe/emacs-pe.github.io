@@ -1,22 +1,37 @@
-WGET  ?= wget
-CASK  ?= cask
-EMACS  = emacs
-BATCH  = $(EMACS) --batch -Q
+# Installation:
+#
+#     $ bundle install --path vendor/bundle
+#     $ bundle exec jekyll serve
+
+CASK   ?= cask
+CURL   ?= curl
+JEKYLL ?= jekyll
+
+EMACS   = emacs
+BATCH   = $(EMACS) --batch -Q
 
 export EMACS
 
-PKGDIR := $(shell EMACS=$(EMACS) $(CASK) package-directory)
+THEME_REV = master
+THEME_TGZ = https://github.com/muan/scribble/archive/$(THEME_REV).tar.gz
+THEME_TGZ_OPTS = --strip-components 1  \
+	--exclude='LICENSE'            \
+	--exclude='about.md'           \
+	--exclude='README.md'          \
+	--exclude='404.html'           \
+	--exclude='index.html'         \
+	--exclude='Rakefile'           \
+	--exclude='Gemfile.lock'       \
+	--exclude='.gitignore'         \
+	--exclude='_posts'             \
+	--exclude='_assets'            \
+	--exclude='_config.yml'
 
-.PHONY: all build
+serve:
+	$(JEKYLL) serve
 
-all: build
-
-build: publish.el $(PKGDIR)
-	$(CASK) exec $(BATCH) -l publish.el -f org-publish-all
-
-$(PKGDIR): Cask
-	$(CASK) install
-	touch $(PKGDIR)
+import-theme:
+	$(CURL) -sL "$(THEME_TGZ)" | tar xz $(THEME_TGZ_OPTS)
 
 .PHONY: clean
 clean:
@@ -33,6 +48,6 @@ elpa: package-build.el
 	$(BATCH) -l $< -f package-build-all
 
 package-build.el:
-	$(WGET) -q -O $@ "https://github.com/milkypostman/melpa/raw/master/package-build.el"
+	$(CURL) -sOL $@ "https://github.com/milkypostman/melpa/raw/master/package-build.el"
 
 .INTERMEDIATE: package-build.el
