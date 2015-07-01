@@ -7,4 +7,5 @@
 /package-build.el
 /vendor/
 /working/
+/_drafts/_site/
 !/packages/*.tar

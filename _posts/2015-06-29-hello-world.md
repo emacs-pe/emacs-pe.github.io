@@ -4,14 +4,14 @@ title: Yet another Emacs blog
 ---
 
 I succumbed the temptation to start a Emacs blog. I plan to write
-about things that I discover about Emacs and packages which I found
+about things that I discover about Emacs and packages which I find
 useful.
 
 Currently uses [jekyll][] with the [scribble][] theme.
 
 ## Why [jekyll][] and not our beloved [org-mode][]?
 
-You can [certainly][] [use][] [mode][] [org][] to write a blog but
+You can [certainly][] [use][] [org][] [mode][] to write a blog but
 you’ll end up handling manually most of the features that comes for
 free with jekyll (rss, archive, pagination, etc).  I mainly choose
 jekyll because it’s really easy to setup, and github pages offers a
