@@ -48,6 +48,6 @@ elpa: package-build.el
 	$(BATCH) -l $< -f package-build-all
 
 package-build.el:
-	$(CURL) -sOL $@ "https://github.com/milkypostman/melpa/raw/master/package-build.el"
+	$(CURL) -sL -o $@ "https://github.com/milkypostman/melpa/raw/master/package-build.el"
 
 .INTERMEDIATE: package-build.el

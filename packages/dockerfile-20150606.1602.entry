@@ -1,2 +1,0 @@
-
-(dockerfile . [(20150606 1602) ((emacs (24))) "Dockerfile major mode" single ((:keywords "convenience") (:url . "https://github.com/emacs-pe/dockerfile.el"))])

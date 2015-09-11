@@ -4,7 +4,7 @@
 
 ;; Author: Mario Rodas <marsam@users.noreply.github.com>
 ;; URL: https://github.com/emacs-pe/vagrant.el
-;; Package-Version: 20150328.1916
+;; Package-Version: 20150910.2057
 ;; Keywords: vagrant, convenience
 ;; Version: 0.0.1
 ;; Package-Requires: ((emacs "24") (cl-lib "0.5"))
@@ -25,28 +25,30 @@
 ;; along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; [![Travis build status](https://travis-ci.org/emacs-pe/vagrant.el.png?branch=master)](https://travis-ci.org/emacs-pe/vagrant.el)
 ;;
 ;; `vagrant.el' provides easy interaction with [vagrant][] also offers
 ;; a `vagrant' TRAMP method to interact with vagrant machines.
 ;;
-;;; Installation:
+;; Installation:
+;;
 ;; To use this `vagrant.el' it's necessary to install the [vagrant-info][] plugin.
 ;;
-;;; Usage:
+;; Usage:
+;;
 ;; You can get a complete list of your available vagrant machines with
 ;; `M-x vagrant-list-machines`.
 ;;
-;; The `vagrant' TRAMP method works by using an custom ssh configfile
+;; The `vagrant' TRAMP method works by using an custom ssh_config(5) file
 ;; (`vagrant-ssh-config-file') for vagrant machines, so you need to add manually
 ;; the ssh-config of a machine with `M-x vagrant-add-ssh-config`.
 ;;
-;;; Troubleshooting:
+;; Troubleshooting:
+;;
 ;; + **My machine doesn't shows up**
 ;;
 ;;   `vagrant.el' uses [vagrant-info][] and this plugin uses `global-status',
 ;;   so if the command `vagrant global-status` doesn't shows the information of
-;;   your vagrant machine you can follow the intructions described in
+;;   your vagrant machine you can follow the instructions described in
 ;;   https://docs.vagrantup.com/v2/cli/global-status.html
 ;;
 ;; + **The `vagrant' TRAMP method show already deleted machines**
@@ -79,8 +81,9 @@
   :type 'string
   :group 'vagrant)
 
+;;;###autoload
 (defcustom vagrant-ssh-config-file (expand-file-name "vagrant-ssh-config" user-emacs-directory)
-  "Vagrant ssh config filename."
+  "Vagrant ssh_config(5) filename."
   :type 'string
   :group 'vagrant)
 
@@ -89,7 +92,7 @@
   :type 'boolean
   :group 'vagrant)
 
-;;;###tramp-autoload
+;;;###autoload
 (defconst vagrant-tramp-method "vagrant"
   "Method to connect vagrant machines.")
 
@@ -251,8 +254,7 @@
 
 (defun vagrant--create-file-if-not-exists (filename)
   "Create an empty file with name FILENAME."
-  (unless (file-exists-p filename)
-    (call-process "touch" nil nil nil filename)))
+  (or (file-exists-p filename) (call-process "touch" nil nil nil filename)))
 
 ;;;###autoload
 (defun vagrant-tramp-cleanup-ssh-config ()
@@ -263,43 +265,48 @@ This involves:
 + Remove vagrant entries from `tramp-cache-data'.
 + Dump `tramp-persistency-file-name'."
   (interactive)
-  (when (file-exists-p vagrant-ssh-config-file)
-    (delete-file vagrant-ssh-config-file))
+  (and (file-exists-p vagrant-ssh-config-file)
+       (delete-file vagrant-ssh-config-file))
   (vagrant--create-file-if-not-exists vagrant-ssh-config-file)
-  (maphash (lambda (key _value)
-             (when (and (and (vectorp key))
-                        (string-equal vagrant-tramp-method (tramp-file-name-method key)))
-               (remhash key tramp-cache-data)))
+  (maphash (lambda (key _)
+             (and (and (vectorp key))
+                  (string-equal vagrant-tramp-method (tramp-file-name-method key))
+                  (remhash key tramp-cache-data)))
            tramp-cache-data)
   (setq tramp-cache-data-changed t)
   (if (zerop (hash-table-count tramp-cache-data))
-      (when (file-exists-p tramp-persistency-file-name)
-        (delete-file tramp-persistency-file-name))
+      (ignore-errors (delete-file tramp-persistency-file-name))
     (tramp-dump-connection-properties)))
 
-;;;###tramp-autoload
+;;;###autoload
 (defconst vagrant-tramp-completion-function-alist
   `((vagrant--create-file-if-not-exists ,vagrant-ssh-config-file)
-    (tramp-parse-sconfig               ,vagrant-ssh-config-file))
+    (tramp-parse-sconfig                ,vagrant-ssh-config-file))
   "Default list of (FUNCTION FILE) pairs to be examined for vagrant method.")
 
-;;;###tramp-autoload
-(add-to-list 'tramp-methods
-             `(,vagrant-tramp-method
-               (tramp-login-program        "ssh")
-               (tramp-login-args           (("-l" "%u") ("-p" "%p") ("%c") ("-e" "none")
-                                            ("%h") ("-F" ,vagrant-ssh-config-file)))
-               (tramp-async-args           (("-q")))
-               (tramp-remote-shell         "/bin/sh")
-               (tramp-remote-shell-args    ("-c"))
-               (tramp-gw-args              (("-o" "GlobalKnownHostsFile=/dev/null")
-                                            ("-o" "UserKnownHostsFile=/dev/null")
-                                            ("-o" "StrictHostKeyChecking=no")))
-               (tramp-default-port         22)))
+;;;###autoload
+(defun vagrant-add-tramp-method ()
+  "Add vagrant tramp method."
+  (interactive)
+  (add-to-list 'tramp-methods
+               `(,vagrant-tramp-method
+                 (tramp-login-program        "ssh")
+                 (tramp-login-args           (("-l" "%u") ("-p" "%p") ("%c") ("-e" "none")
+                                              ("%h") ("-F" ,vagrant-ssh-config-file)))
+                 (tramp-async-args           (("-q")))
+                 (tramp-remote-shell         "/bin/sh")
+                 (tramp-remote-shell-login   ("-l"))
+                 (tramp-remote-shell-args    ("-c"))
+                 (tramp-gw-args              (("-o" "GlobalKnownHostsFile=/dev/null")
+                                              ("-o" "UserKnownHostsFile=/dev/null")
+                                              ("-o" "StrictHostKeyChecking=no")))
+                 (tramp-default-port         22))))
 
-;;;###tramp-autoload
+;;;###autoload
 (eval-after-load 'tramp
-  '(tramp-set-completion-function vagrant-tramp-method vagrant-tramp-completion-function-alist))
+  '(progn
+     (vagrant-add-tramp-method)
+     (tramp-set-completion-function vagrant-tramp-method vagrant-tramp-completion-function-alist)))
 
 (provide 'vagrant)
 

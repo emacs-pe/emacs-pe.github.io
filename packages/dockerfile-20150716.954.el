@@ -4,7 +4,7 @@
 
 ;; Author: Mario Rodas <marsam@users.noreply.github.com>
 ;; URL: https://github.com/emacs-pe/dockerfile.el
-;; Package-Version: 20150606.1602
+;; Package-Version: 20150716.954
 ;; Keywords: convenience
 ;; Version: 0.1
 ;; Package-Requires: ((emacs "24"))
@@ -36,6 +36,7 @@
 ;;; Code:
 (require 'ansi-color)
 (require 'compile)
+(require 'outline)
 (require 'sh-script)
 
 (defgroup dockerfile nil
@@ -50,7 +51,7 @@
   :type 'string
   :group 'dockerfile)
 
-(defcustom dockerfile-docker-extra-args nil
+(defcustom dockerfile-docker-options nil
   "List of additional arguments for docker executable."
   :type '(repeat string)
   :group 'dockerfile)
@@ -72,16 +73,36 @@
 (defvar dockefile-image-name-history nil)
 
 ;; https://github.com/docker/docker/blob/093f57a/builder/command/command.go
-(defconst dockerfile-keywords
-  '("env" "label" "maintainer" "add" "copy" "from" "onbuild" "workdir"
-    "run" "cmd" "entrypoint" "expose" "volume" "user"))
+(defvar dockerfile-keywords
+  '("ENV" "LABEL" "MAINTAINER" "ADD" "COPY" "FROM" "ONBUILD" "WORKDIR"
+    "RUN" "CMD" "ENTRYPOINT" "EXPOSE" "VOLUME" "USER"))
+
+(defconst dockerfile-outline-regexp (regexp-opt dockerfile-keywords))
+(defconst dockerfile-outline-heading-alist
+  (mapcar (lambda (method) (cons method 1)) dockerfile-keywords))
+
+(defconst dockerfile-imenu-generic-expression
+  (mapcar (lambda (keyword)
+            (list keyword
+                  (rx-to-string `(: line-start ,keyword (+ space) (group (* any) (not (in "\n" blank)))) t)
+                  1))
+          dockerfile-keywords))
 
 
-(defun dockerfile-build-filter ()
-  "Handle match highlighting escape sequences inserted by the docker process.
-This function is called from `compilation-filter-hook'."
-  ;; TODO: use `compilation-filter-start' instead of `point-min'
-  (ansi-color-apply-on-region (point-min) (point-max)))
+(defconst dockerfile-build-outline-regexp "Step [[:digit:]]+ :")
+(defconst dockerfile-build-outline-heading-alist `((,dockerfile-build-outline-regexp . 2)))
+
+(defvar dockerfile-build-mode-font-lock-keywords
+  '(("^[sS]ending build context to Docker.*"
+     (0 compilation-info-face))
+    ("[rR]emoving intermediate container \\([[:alnum:]]+\\)$"
+     (0 compilation-info-face))
+    ("^ ---> \\([[:alnum:] \t]+\\)$"
+     (1 compilation-warning-face))
+    ("[sS]uccessfully built \\([[:alnum:]]+\\)$"
+     (1 compilation-warning-face)))
+  "Additional things to highlight in `dockerfile-build-mode'.
+This gets tacked on the end of the generated expressions.")
 
 (defconst dockerfile-build-error-regexp-alist-alist
   `((build-step ,(rx bol (group "Step" space (+ num)) space ":"  space (group (+ any)))
@@ -96,24 +117,43 @@ See `compilation-error-regexp-alist' for help on their format.")
 
 (defconst dockerfile-build-error-regexp-alist (mapcar 'car dockerfile-build-error-regexp-alist-alist))
 
+(defun dockerfile-build-filter ()
+  "Handle match highlighting escape sequences inserted by the docker process.
+This function is called from `compilation-filter-hook'."
+  ;; TODO: use `compilation-filter-start' instead of `point-min'
+  (ansi-color-apply-on-region (point-min) (point-max)))
+
 (define-compilation-mode dockerfile-build-mode "docker-build"
   "Dockefile build results compilation mode."
+  (set (make-local-variable 'outline-regexp)
+       dockerfile-build-outline-regexp)
+  (set (make-local-variable 'outline-heading-alist)
+       dockerfile-build-outline-heading-alist)
+  (set (make-local-variable 'imenu-generic-expression)
+       `(( nil ,(concat "^\\(?:" dockerfile-build-outline-regexp "\\).*$") 0)))
+  (add-to-invisibility-spec '(outline . t))
+  (set (make-local-variable 'compilation-mode-font-lock-keywords)
+       dockerfile-build-mode-font-lock-keywords)
   (set (make-local-variable 'compilation-error-regexp-alist)
        dockerfile-build-error-regexp-alist)
   (set (make-local-variable 'compilation-error-regexp-alist-alist)
        dockerfile-build-error-regexp-alist-alist)
-  (add-hook 'compilation-filter-hook 'dockerfile-build-filter nil t))
+  (add-hook 'compilation-filter-hook 'dockerfile-build-filter nil t)
+  (imenu-add-to-menubar "Steps"))
+
+(define-key dockerfile-build-mode-map (kbd "p") #'compilation-previous-error)
+(define-key dockerfile-build-mode-map (kbd "n") #'compilation-next-error)
+(define-key dockerfile-build-mode-map (kbd "t") #'outline-toggle-children)
 
 ;;;###autoload
 (defun dockerfile-build (path-or-url &optional image-name)
   "Build Dockerfile from PATH-OR-URL with tag IMAGE-NAME."
   (interactive (if current-prefix-arg
                    (list (read-directory-name "Path to Dockerfile: ")
-                         (read-string (if dockefile-image-name (format "Image name (default \"%s\"): " dockefile-image-name) "Image name: ")
-                                      nil dockefile-image-name-history dockefile-image-name))
+                         (read-string "Image name: " dockefile-image-name dockefile-image-name-history dockefile-image-name))
                  (list (file-name-directory (buffer-file-name)) dockefile-image-name)))
   (let* ((name-arg (and (not (or (null image-name) (string= "" image-name))) (list "-t" image-name)))
-         (args (append (list dockerfile-docker-executable "build") dockerfile-docker-extra-args name-arg (list path-or-url)))
+         (args (append (list dockerfile-docker-executable "build") dockerfile-docker-options name-arg (list path-or-url)))
          (command (mapconcat 'identity args " ")))
     (compilation-start command 'dockerfile-build-mode
                        (lambda (_)
@@ -126,7 +166,10 @@ See `compilation-error-regexp-alist' for help on their format.")
 
 (defvar dockerfile-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map "\C-c\C-c" #'dockerfile-build)
+    (define-key map (kbd "C-c C-c") 'dockerfile-build)
+    (define-key map (kbd "C-c C-n") 'outline-next-heading)
+    (define-key map (kbd "C-c C-p") 'outline-previous-heading)
+    (define-key map (kbd "C-c C-t") 'outline-toggle-children)
     map)
   "Keymap for `dockerfile-mode'.")
 
@@ -136,12 +179,19 @@ See `compilation-error-regexp-alist' for help on their format.")
 
 \\{dockerfile-mode-map}"
   :syntax-table sh-mode-syntax-table
+  (setq outline-regexp dockerfile-outline-regexp
+        outline-heading-alist dockerfile-outline-heading-alist
+        imenu-generic-expression dockerfile-imenu-generic-expression)
+  (add-to-invisibility-spec '(outline . t))
+  (set (make-local-variable 'paragraph-start)
+       (concat paragraph-start "\\|\\(?:" outline-regexp "\\)"))
   (set (make-local-variable 'comment-start) "# ")
   (set (make-local-variable 'comment-start-skip) "#+[\t ]*")
   (set (make-local-variable 'font-lock-defaults)
        '(dockerfile-font-lock-keywords nil t))
   (set (make-local-variable 'indent-line-function)
-       'sh-indent-line))
+       'sh-indent-line)
+  (imenu-add-to-menubar "Contents"))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
