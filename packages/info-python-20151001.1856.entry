@@ -1,0 +1,2 @@
+
+(info-python . [(20151001 1856) nil "Info support for Python Documentation" tar ((:keywords "convenience") (:url . "https://github.com/emacs-pe/info-python.el"))])
