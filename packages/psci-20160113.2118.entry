@@ -1,0 +1,2 @@
+
+(psci . [(20160113 2118) ((emacs (24))) "Interaction with an inferior PureScript process" single ((:keywords "purescript") (:authors ("Mario Rodas" . "marsam@users.noreply.github.com")) (:maintainer "Mario Rodas" . "marsam@users.noreply.github.com") (:url . "https://github.com/emacs-pe/purescript-mode"))])

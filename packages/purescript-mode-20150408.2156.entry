@@ -1,2 +1,0 @@
-
-(purescript-mode . [(20150408 2156) ((emacs (24))) "Major mode for editing Purescript" tar ((:keywords "convenience") (:url . "https://github.com/emacs-pe/purescript-mode"))])

@@ -1,0 +1,2 @@
+
+(purescript-mode . [(20160113 2118) ((emacs (24))) "Major mode for editing Purescript" tar ((:keywords "purescript") (:authors ("Mario Rodas" . "marsam@users.noreply.github.com")) (:maintainer "Mario Rodas" . "marsam@users.noreply.github.com") (:url . "https://github.com/emacs-pe/purescript-mode"))])
