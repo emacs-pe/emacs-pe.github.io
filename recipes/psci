@@ -1,0 +1,3 @@
+(psci :fetcher github
+      :repo "emacs-pe/purescript-mode"
+      :files ("psci.el"))

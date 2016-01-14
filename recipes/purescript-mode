@@ -1,1 +1,4 @@
-(purescript-mode :fetcher github :repo "emacs-pe/purescript-mode")
+(purescript-mode :fetcher github
+                 :repo "emacs-pe/purescript-mode"
+                 :files ("purescript-mode.el"
+                         "purescript-font-lock.el"))
