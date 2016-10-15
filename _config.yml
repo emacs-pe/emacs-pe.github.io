@@ -3,7 +3,6 @@ description:   Emacs Perú home page
 
 exclude:       [ vendor ]
 
-highlighter:   pygments
 permalink:     pretty
 
 links:
