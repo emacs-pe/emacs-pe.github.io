@@ -5,10 +5,6 @@ exclude:       [ vendor ]
 
 highlighter:   pygments
 permalink:     pretty
-markdown:      redcarpet
-redcarpet:
-  extensions:
-    - smart
 
 links:
   - name:      About
