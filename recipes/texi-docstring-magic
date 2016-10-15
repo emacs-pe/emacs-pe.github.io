@@ -1,0 +1,3 @@
+(texi-docstring-magic :fetcher github
+                      :repo "marsam/PG"
+                      :files ("lib/texi-docstring-magic.el"))

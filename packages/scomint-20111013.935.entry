@@ -1,0 +1,2 @@
+
+(scomint . [(20111013 935) nil "Simplified comint for less interactive shells" single ((:authors ("David Aspinall")) (:maintainer "David Aspinall"))])

@@ -1,0 +1,2 @@
+
+(pg-fontsets . [(20120301 1049) nil "Define fontsets useful for Proof General" single ((:authors ("David Aspinall" . "David.Aspinall@ed.ac.uk")) (:maintainer "David Aspinall" . "David.Aspinall@ed.ac.uk"))])

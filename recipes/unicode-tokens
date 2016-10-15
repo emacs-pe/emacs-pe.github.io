@@ -1,0 +1,3 @@
+(unicode-tokens :fetcher github
+                :repo "marsam/PG"
+                :files ("lib/unicode-tokens.el"))
