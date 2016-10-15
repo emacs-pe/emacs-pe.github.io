@@ -1,0 +1,6 @@
+(proof :fetcher github
+       :repo "marsam/PG"
+       :files ("generic/*.el"
+               "doc/*.texi"
+               "images"
+               ))
