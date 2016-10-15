@@ -1,0 +1,4 @@
+(coq :fetcher github
+     :repo "marsam/PG"
+     :files ("coq/*.el"
+             (:exclude "coq/coq-autotest.el")))
