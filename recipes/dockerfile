@@ -1,1 +1,0 @@
-(dockerfile :fetcher github :repo "emacs-pe/dockerfile.el")
