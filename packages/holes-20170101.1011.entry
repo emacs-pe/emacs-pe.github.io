@@ -1,0 +1,2 @@
+
+(holes . [(20170101 1011) ((span (0))) "a little piece of elisp to define holes in your buffer" single nil])

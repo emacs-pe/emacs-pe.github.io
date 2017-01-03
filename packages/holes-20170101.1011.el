@@ -1,5 +1,5 @@
 ;;; holes.el --- a little piece of elisp to define holes in your buffer
-;; Package-Version: 20161015.1211
+;; Package-Version: 20170101.1011
 ;;
 ;; Copyright (C) 2001 Pierre Courtieu
 ;;
