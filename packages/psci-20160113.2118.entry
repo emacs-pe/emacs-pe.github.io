@@ -1,2 +1,2 @@
 
-(psci . [(20160113 2118) ((emacs (24))) "Interaction with an inferior PureScript process" single ((:keywords "purescript") (:authors ("Mario Rodas" . "marsam@users.noreply.github.com")) (:maintainer "Mario Rodas" . "marsam@users.noreply.github.com") (:url . "https://github.com/emacs-pe/purescript-mode"))])
+(psci . [(20160113 2118) ((emacs (24))) "Interaction with an inferior PureScript process" single ((:commit . "eec077c2f9ec2a8b98220a021f4090703aa6af03") (:keywords "purescript") (:authors ("Mario Rodas" . "marsam@users.noreply.github.com")) (:maintainer "Mario Rodas" . "marsam@users.noreply.github.com") (:url . "https://github.com/emacs-pe/purescript-mode"))])

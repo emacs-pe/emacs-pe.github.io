@@ -1,2 +1,2 @@
 
-(sly-repl-ansi-color . [(20160214 318) ((sly (0)) (cl-lib (0 5))) "Add ANSI colors support to the sly mrepl." single ((:keywords "sly") (:authors ("Javier \"PuercoPop\" Olaechea" . "pirata@gmail.com") ("Max Mikhanosha")) (:maintainer "Javier \"PuercoPop\" Olaechea" . "pirata@gmail.com") (:url . "https://github.com/PuercoPop/sly-repl-ansi-color"))])
+(sly-repl-ansi-color . [(20160214 318) ((sly (0)) (cl-lib (0 5))) "Add ANSI colors support to the sly mrepl." single ((:commit . "505d162d52219654b57a455e26c9e02c7254a8f2") (:keywords "sly") (:authors ("Javier \"PuercoPop\" Olaechea" . "pirata@gmail.com") ("Max Mikhanosha")) (:maintainer "Javier \"PuercoPop\" Olaechea" . "pirata@gmail.com") (:url . "https://github.com/PuercoPop/sly-repl-ansi-color"))])

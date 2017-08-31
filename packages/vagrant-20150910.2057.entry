@@ -1,2 +1,2 @@
 
-(vagrant . [(20150910 2057) ((emacs (24)) (cl-lib (0 5))) "Interact with vagrant machines" single ((:keywords "vagrant" "convenience") (:url . "https://github.com/emacs-pe/vagrant.el"))])
+(vagrant . [(20150910 2057) ((emacs (24)) (cl-lib (0 5))) "Interact with vagrant machines" single ((:commit . "c87ea8c2ca6dbd49bc9174afc35b87cf2d7503b6") (:keywords "vagrant" "convenience") (:authors ("Mario Rodas" . "marsam@users.noreply.github.com")) (:maintainer "Mario Rodas" . "marsam@users.noreply.github.com") (:url . "https://github.com/emacs-pe/vagrant.el"))])

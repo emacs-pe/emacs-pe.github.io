@@ -1,2 +1,2 @@
 
-(info-python . [(20151001 1856) nil "Info support for Python Documentation" tar ((:keywords "convenience") (:url . "https://github.com/emacs-pe/info-python.el"))])
+(info-python . [(20151001 1856) nil "Info support for Python Documentation" tar ((:commit . "30a99f4dc045d7317b0a4870ccaab3212c7c6bff") (:keywords "convenience") (:authors ("Mario Rodas" . "marsam@users.noreply.github.com")) (:maintainer "Mario Rodas" . "marsam@users.noreply.github.com") (:url . "https://github.com/emacs-pe/info-python.el"))])

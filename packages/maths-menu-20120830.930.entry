@@ -1,2 +1,0 @@
-
-(maths-menu . [(20120830 930) nil "insert maths characters from a menu" single ((:keywords "convenience") (:authors ("Dave Love" . "fx@gnu.org")) (:maintainer "Dave Love" . "fx@gnu.org"))])
