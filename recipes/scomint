@@ -1,3 +1,0 @@
-(scomint :fetcher github
-         :repo "marsam/PG"
-         :files ("lib/scomint.el"))

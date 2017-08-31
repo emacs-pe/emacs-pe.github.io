@@ -1,3 +1,0 @@
-(holes :fetcher github
-       :repo "marsam/PG"
-       :files ("lib/holes.el"))

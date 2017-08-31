@@ -1,3 +1,0 @@
-(local-vars-list :fetcher github
-                 :repo "marsam/PG"
-                 :files ("lib/local-vars-list.el"))

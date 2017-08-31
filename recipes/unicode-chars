@@ -1,3 +1,0 @@
-(unicode-chars :fetcher github
-               :repo "marsam/PG"
-               :files ("lib/unicode-chars.el"))

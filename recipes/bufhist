@@ -1,3 +1,0 @@
-(bufhist :fetcher github
-         :repo "marsam/PG"
-         :files ("lib/bufhist.el"))

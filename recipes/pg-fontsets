@@ -1,3 +1,0 @@
-(pg-fontsets :fetcher github
-             :repo "marsam/PG"
-             :files ("lib/pg-fontsets.el"))

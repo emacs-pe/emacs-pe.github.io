@@ -1,3 +1,0 @@
-(maths-menu :fetcher github
-            :repo "marsam/PG"
-            :files ("lib/maths-menu.el"))

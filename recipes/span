@@ -1,3 +1,0 @@
-(span :fetcher github
-      :repo "marsam/PG"
-      :files ("lib/span.el"))
