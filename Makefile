@@ -39,15 +39,15 @@ clean:
 	$(RM) *.elc
 
 .PHONY: build-package
-build-package: package-build.el
+build-package: package-build/package-build.el
 	$(BATCH) -l $< -f package-build-archive
 	$(BATCH) -l $< -f package-build-cleanup
 
 .PHONY: elpa
-elpa: package-build.el
+elpa: package-build/package-build.el
 	$(BATCH) -l $< -f package-build-all
 
-package-build.el:
-	$(CURL) -sL -o $@ "https://github.com/milkypostman/melpa/raw/master/package-build.el"
+package-build/package-build.el:
+	$(CURL) -sL -o $@ "https://github.com/melpa/package-build/raw/master/package-build.el"
 
-.INTERMEDIATE: package-build.el
+.INTERMEDIATE: package-build/package-build.el
